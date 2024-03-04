@@ -7,15 +7,18 @@ const inter = Inter({ subsets: ['latin'] })
 
 export default function Home() {
 
-  // const { onClickMinus, onClickPlus, state } = useQuantitySelector()
+  const { state, setState } = useState({
+    count: 0,
+    message: ""
+  })
 
   return (
-    <div className="container mt-10 mx-auto">
-      {/* <h1 className="text-white text-center text-[20px] mb-5">{state}</h1>
-      <div className='flex justify-center items-center gap-3'>
-        <button className='bg-white w-10 text-[30px] active:bg-red-500 transition ease-in-out duration-300 disabled:bg-white disabled:cursor-not-allowed disabled:opacity-50 rounded' onClick={onClickMinus} disabled={state == 0 && true}>-</button>
-        <button className='bg-white w-10 text-[30px] active:bg-red-500 duration-300 disabled:cursor-not-allowed disabled:bg-white disabled:opacity-50 rounded' onClick={onClickPlus} disabled={state == 10 && true}>+</button>
-      </div> */}
+    <div className="container">
+      <div className="text-center">
+        <h1 className="text-white mt-14">{state?.count}</h1>
+        <button className="bg-white text-black px-5 me-3">-</button>
+        <button className="bg-white text-black px-5">+</button>
+      </div>
     </div>
   )
 }
