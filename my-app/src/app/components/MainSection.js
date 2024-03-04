@@ -2,13 +2,14 @@
 import ModalComp from './ModalComp';
 import List from './List';
 import { useState } from 'react';
+import Gallery from '../components/Gallery';
 
 const MainSection = ({ data }) => {
 
     const [show, setShow] = useState(false)
 
     return (
-        <div className="container mt-5">
+        <div className="mt-5">
             <div className="d-flex justify-content-between">
                 <ModalComp />
                 <button className="btn btn-success btn-lg" onClick={() => setShow(!show)}>EDIT</button>
@@ -37,7 +38,7 @@ const MainSection = ({ data }) => {
                 </div>
             }
 
-            <table class="table mt-5 table-striped">
+            <table className="table mt-5 table-striped">
                 <thead>
                     <tr>
                     <th>Anime</th>
@@ -48,9 +49,10 @@ const MainSection = ({ data }) => {
                 <tbody>
                     <List data={data} />
                 </tbody>
-            </table>
+            </table> 
 
-            {/* Form */}
+            <Gallery />
+
         </div>
     )
 }

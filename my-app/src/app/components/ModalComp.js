@@ -10,9 +10,9 @@ const ModalComp = () => {
 
     return (
         <>
-            <div div className="d-flex justify-content-center">
+            <div className="d-flex justify-content-center">
                 <Button variant="primary" onClick={handleShow}>
-                Launch demo modal
+                    Launch demo modal
                 </Button>
             </div>
             

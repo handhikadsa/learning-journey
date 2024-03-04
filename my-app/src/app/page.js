@@ -1,6 +1,5 @@
 import { Modal, Button, Card } from 'react-bootstrap'
 import MainSection from './components/MainSection';
-import Gallery from './components/Gallery';
 
 const getData = async () => {
   const res = await fetch("https://animechan.xyz/api/quotes")
@@ -19,12 +18,8 @@ export default async function Home() {
   const data = await getData()
 
   return (
-    <main>
-      
-    <MainSection data={data} />
-
-    <Gallery />
-
+    <main className="container">
+      <MainSection data={data} />
     </main>
   );
 }
