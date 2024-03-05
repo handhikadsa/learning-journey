@@ -3,17 +3,30 @@ import { usePathname } from 'next/navigation'
 import Link from "next/link"
 
 
-const NavLink = ({ href, exact, children, ...props }) => {
+const NavLink = ({ isMobile, href, exact, children, ...props }) => {
     const pathname  = usePathname();
     const isActive = exact ? pathname === href : pathname.startsWith(href);
 
     if (isActive) {
-        props.className += ' bg-dark-500 text-red-500';
+        if (isMobile) {
+            props.className += ' menu-active';
+        } else {
+            props.className += ' bg-dark-500 text-red-500';
+        }
     }
 
     return (
-        <Link href={href} {...props}>
-            {children}
+        <Link href={href}>
+            {
+                isMobile ?
+                <label {...props}>
+                    {children}
+                </label>
+                :
+                <li {...props}>
+                    {children}
+                </li>
+            }
         </Link>
     )
 }

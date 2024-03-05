@@ -4,7 +4,7 @@ export default function Home() {
   return (
     <main className="mb-10">
       <HomeBanner />
-      <div className="grid grid-cols-12 mt-10">
+      {/* <div className="grid grid-cols-12 mt-10">
         <div className="col-span-6 place-self-center">
           <div>
             <label className="btn btn-primary" htmlFor="modal-1">Open Modal</label>
@@ -47,7 +47,7 @@ export default function Home() {
             </div>
           </div>
         </div>
-      </div>
+      </div> */}
     </main>
   );
 }
