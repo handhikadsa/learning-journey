@@ -26,7 +26,7 @@ const Profile = async () => {
         <>
             <h1 className="text-center">This is Profile Page</h1>
 
-            <div className="container mx-auto max-w-screen-sm md:max-w-screen-md lg:max-w-screen-lg xl:max-w-screen-xl 2xl:max-w-screen-2xl my-5 px-5">
+            <div className="container mx-auto max-w-screen-sm md:max-w-screen-md lg:max-w-screen-lg xl:max-w-screen-xl 2xl:max-w-screen-2xl mt-5 px-5">
                 <Table data={data} />
             </div>
         </>
