@@ -12,7 +12,7 @@ const TableListItem = ({ item, i }) => {
     return (
         <tr key={i}>
             <td className="">
-                <NavLink href={`/about/profile/${item.name}`}>{item.name}</NavLink>
+                <NavLink className="list-none" href={`/about/profile/${item.name}`}>{item.name}</NavLink>
             </td>
             <td className="">{item.url}</td>
         </tr>

@@ -17,16 +17,9 @@ const NavLink = ({ isMobile, href, exact, children, ...props }) => {
 
     return (
         <Link href={href}>
-            {
-                isMobile ?
-                <label {...props}>
-                    {children}
-                </label>
-                :
-                <li {...props}>
-                    {children}
-                </li>
-            }
+            <li {...props}>
+                {children}
+            </li>
         </Link>
     )
 }
