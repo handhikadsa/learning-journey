@@ -3,29 +3,18 @@ import { useState, useEffect } from 'react'
 import NavLink from "./NavLink"
 
 const Navbar = () => {
-    const [backgroundNavbar, setBackgroundNavbar] = useState("")
-    const [lastScrollY, setLastScrollY] = useState(0);
-
-
-    const controlNavbar = () => {
-        if (window.scrollY == 0) { // if scroll down hide the navbar
-            setBackgroundNavbar("bg-transparent")
-        } else { // if scroll up show the navbar
-            setBackgroundNavbar("bg-black")
-        }
-    
-        // remember current page location to use in the next move
-        setLastScrollY(window.scrollY); 
-    };
+    const [backgroundNavbar, setBackgroundNavbar] = useState("bg-transparent")
 
     useEffect(() => {
-        window.addEventListener('scroll', controlNavbar);
-    
-        // cleanup function
-        return () => {
-           window.removeEventListener('scroll', controlNavbar);
+        window.onscroll = function () { 
+            if (window.scrollY > 50 ) {
+                setBackgroundNavbar("bg-black");
+            } 
+            else {
+                setBackgroundNavbar("bg-transparent");
+            }
         };
-      }, [lastScrollY]);
+    }, [backgroundNavbar]);
 
     return (
         <div className={`navbar shadow-none navbar-sticky transition ease-out duration-300 ${backgroundNavbar}`}>

@@ -2,7 +2,7 @@
 
 const AboutLayout = ({children}) => {
     return (
-        <div className="pt-20 bg-gradient-to-r h-screen">
+        <div className="pt-20">
             {children}
         </div>
     )

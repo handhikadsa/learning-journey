@@ -8,7 +8,7 @@ const NavLink = ({ href, exact, children, ...props }) => {
     const isActive = exact ? pathname === href : pathname.startsWith(href);
 
     if (isActive) {
-        props.className += ' bg-dark-500 text-white-500';
+        props.className += ' bg-dark-500 text-red-500';
     }
 
     return (
