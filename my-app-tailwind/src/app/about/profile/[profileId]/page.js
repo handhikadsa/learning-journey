@@ -1,3 +1,5 @@
+
+
 export async function generateMetadata({ params }) {
 
     const capitalize = params.profileId.charAt(0).toUpperCase() + params.profileId.slice(1)
@@ -23,8 +25,8 @@ const ProfileDetail = async ({ params: { profileId } }) => {
 
     return (
         <>
-            <h1>Pokemon Name</h1>
-            <h1 className="text-center">{data.name}</h1>
+          <h1>Pokemon Name</h1>
+          <h1 className="text-center">{data.name}</h1>
         </>
     )
 }
