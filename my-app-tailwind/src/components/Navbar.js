@@ -122,7 +122,7 @@ const Navbar = () => {
             </div>
 
             <div className={`${showSidebar ? "opacity-1 visible" : "opacity-0 hidden"} h-screen bg-black/60 fixed w-full top-0 left-0 transition-all z-[98]`}></div>
-            <aside className={`${showSidebar ? "" : "-translate-x-full"} sidebar sidebar-fixed-left h-full justify-start absolute left-0 overflow-auto z-[99] transition-transform`}>
+            <aside className={`${showSidebar ? "" : "-translate-x-full"} sidebar sidebar-fixed-left h-full justify-start left-0 overflow-auto z-[99] transition-transform`}>
                 <section className="sidebar-title items-center p-4">
                     <svg fill="none" height="42" viewBox="0 0 32 32" width="42" xmlns="http://www.w3.org/2000/svg">
                         <rect height="100%" rx="16" width="100%"></rect>
