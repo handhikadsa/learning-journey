@@ -1,0 +1,10 @@
+{
+  "name": "cloud",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "firebaseEmu": "firebase emulators:start --import=./dir --export-on-exit"
+  },
+  "author": "",
+  "license": "ISC"
+}
