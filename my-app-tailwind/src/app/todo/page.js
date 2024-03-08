@@ -1,10 +1,11 @@
 import TodoListComponent from "../components/todo/TodoList"
 import AddTodoList from "../components/todo/AddTodoList"
 import EditTodoList from "../components/todo/EditTodoList"
-import { getTodos } from "../utils/todos"
+import { getTodos, addTodos } from "../utils/todos"
 
 const Todo = async () => {
     const data = await getTodos();
+
     return (
         <div className="mt-10">
             <div className="mb-10 relative">
@@ -13,22 +14,18 @@ const Todo = async () => {
                     <AddTodoList />
                 </div>
             </div>
-            {/* <div className="flex justify-center gap-5 items-center my-10">
-                <h1 className="text-white text-center text-xl">Your Todo List</h1>
-                <label className="btn btn-success" htmlFor="addTodo">+ Todo</label>
-                <input className="modal-state" id="addTodo" type="checkbox" />
-                <AddTodoList />
-            </div> */}
-            {
-                data.map((item) => {
+
+            <div className="grid grid-cols-12 gap-10">
+                {
+                    data.map((item, i) => {
                     return (
-                        // <h1>{item.name}</h1>
-                        <TodoListComponent item={item} />
-                    )
-                })
-            }
-            
-            <EditTodoList />
+                            <div className="col-span-4">
+                                <TodoListComponent item={item} key={i} />
+                            </div>
+                        )
+                    })
+                }
+            </div>
         </div>
     )
 }

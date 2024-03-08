@@ -1,13 +1,15 @@
 'use server'
 import { db } from "./firebase";
-import { collection, doc, getDocs, getDoc, updateDoc } from "firebase/firestore";
+import { collection, doc, getDocs, getDoc, updateDoc, addDoc } from "firebase/firestore";
 
 const COLLECTION_NAME = 'test'
-export async function addTodos(data) {
-
+export async function addTodos(formData) {
+    const rawFormData = {
+        title: formData.get('title'),
+        description: formData.get('description')
+    }
     try {
-
-        const snapshot = await addDoc(collection(db, COLLECTION_NAME), data)
+        const snapshot = await addDoc(collection(db, COLLECTION_NAME), rawFormData)
         console.log(snapshot.id)
     } catch (error) {
         throw new Error('Failed to fetch data')
@@ -28,13 +30,18 @@ export async function getTodos() {
     }
 }
 
-export async function updateTodos(data) {
-    const {id, ...restData } = data;
-    console.log(data)
-    let docRef = doc(db,  COLLECTION_NAME, data.id);
+export async function updateTodos(id, formData) {
+    console.log("data: ", formData)
+
+    const rawFormData = {
+        title: formData.get('title'),
+        description: formData.get('description')
+    }
+
+    let docRef = doc(db,  COLLECTION_NAME, id);
 
     try {
-        const q = await updateDoc(docRef, restData);
+        const q = await updateDoc(docRef, rawFormData);
         console.log("operation update success: ", id)
     } catch (e) {
         console.error(e)
@@ -51,5 +58,4 @@ export async function getTodo(id) {
     } catch (e) {
         throw new Error('Failed to fetch data')
     }
-
 }
