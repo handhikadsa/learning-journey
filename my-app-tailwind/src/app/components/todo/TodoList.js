@@ -1,21 +1,24 @@
 'use client'
 
+import { updateTodos } from "@/app/utils/todos"
 import { useState } from "react"
 
-const TodoListComponent = () => {
+const TodoListComponent = ({ item }) => {
 
-    const [checked, setChecked] = useState(false)
+    const [checked, setChecked] = useState(item.checked || false)
 
-    const handleComplete = () => {
-        setChecked(!checked)
+    const handleComplete = async() => {
+        const newValue = !checked;
+        await updateTodos({id: item.id, checked: newValue })
+        setChecked(newValue)
     }
 
     return (
         <>
-            <label htmlFor="editTodo" className={`card cursor-pointer transition-colors duration-300 ${checked && "bg-green-900"}`}>
+            <label htmlFor="editTodo" className={`card cursor-pointer transition-colors duration-300 ${checked && "bg-green-900"} mb-3`}>
                 <div className="card-body">
-                    <h2 className="card-header">Maximizing Your Productivity at Work</h2>
-                    <p className="text-content2">Are you looking to increase your productivity at work?</p>
+                    <h2 className="card-header">{item.title}</h2>
+                    <p className="text-content2">{item.description}</p>
                     <div className="card-footer justify-start gap-5">
                         <input type="checkbox" className="checkbox checkbox-success checkbox-xl"
                             onChange={handleComplete}

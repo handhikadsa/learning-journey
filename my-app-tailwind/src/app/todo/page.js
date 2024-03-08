@@ -1,8 +1,10 @@
 import TodoListComponent from "../components/todo/TodoList"
 import AddTodoList from "../components/todo/AddTodoList"
 import EditTodoList from "../components/todo/EditTodoList"
+import { getTodos } from "../utils/todos"
 
-const Todo = () => {
+const Todo = async () => {
+    const data = await getTodos();
     return (
         <>
             <div className="flex justify-center gap-5 items-center my-10">
@@ -11,7 +13,15 @@ const Todo = () => {
                 <input className="modal-state" id="addTodo" type="checkbox" />
                 <AddTodoList />
             </div>
-            <TodoListComponent />
+            {
+                data.map((item) => {
+                    return (
+                        // <h1>{item.name}</h1>
+                        <TodoListComponent item={item} />
+                    )
+                })
+            }
+            
             <EditTodoList />
         </>
     )
