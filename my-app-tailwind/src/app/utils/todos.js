@@ -1,6 +1,6 @@
 'use server'
 import { db } from "./firebase";
-import { collection, doc, getDocs, getDoc, updateDoc, addDoc } from "firebase/firestore";
+import { collection, doc, getDocs, getDoc, updateDoc, deleteDoc, addDoc } from "firebase/firestore";
 
 const COLLECTION_NAME = 'test'
 export async function addTodos(formData) {
@@ -58,4 +58,18 @@ export async function getTodo(id) {
     } catch (e) {
         throw new Error('Failed to fetch data')
     }
+
+}
+
+export async function deleteTodo(id) {
+    let docRef = doc(db, id);
+
+    try {
+        await deleteDoc(docRef);
+        console.log('document successfully deleted: ', id)
+
+    } catch (e) {
+        throw new Error('Failed to fetch data')
+    }
+
 }
