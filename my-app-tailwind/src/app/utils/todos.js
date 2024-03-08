@@ -30,6 +30,20 @@ export async function getTodos() {
     }
 }
 
+export async function checkTodo(id, checked) {
+
+    let docRef = doc(db, COLLECTION_NAME, id);
+
+    try {
+        const q = await updateDoc(docRef, { checked });
+        console.log("operation update success: ", id)
+    } catch (e) {
+        console.error(e)
+        throw new Error('Failed to fetch data')
+    }
+}
+
+
 export async function updateTodos(id, formData) {
     console.log("data: ", formData)
 

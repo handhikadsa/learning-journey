@@ -5,7 +5,7 @@ import { useState } from 'react';
 import { addTodos } from '@/app/utils/todos';
 import ButtonAddTodo from './ButtonAddTodo'
 
-const AddTodoList = ({ children }) => {
+const AddTodoList = () => {
     const [openModal, setOpenModal] = useState(false);
     
     return (
