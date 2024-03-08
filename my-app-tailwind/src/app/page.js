@@ -1,9 +1,33 @@
-import HomeBanner from "./components/home/Banner";
+import { db, auth } from "./utils/firebase";
+import { createUserWithEmailAndPassword, getAuth, connectAuthEmulator } from "firebase/auth";
+import { getFirestore, doc, setDoc, getDoc, connectFirestoreEmulator, addDoc } from "firebase/firestore";
 
-export default function Home() {
+import HomeBanner from "./components/home/Banner";
+import AddButton from "./components/AddButton";
+
+
+export default async function Home() {
+
+
+  async function addData(formData) {
+    'use server'
+
+    const data = {
+      name: formData.get('name'),
+    }
+    await addTodos(data);
+
+    // mutate data
+    // revalidate cache
+  }
   return (
     <main className="mb-10">
       <HomeBanner />
+
+      <form action={addData}>
+        <input type="text" name="name" />
+        <AddButton />
+      </form>
       {/* <div className="grid grid-cols-12 mt-10">
         <div className="col-span-6 place-self-center">
           <div>
