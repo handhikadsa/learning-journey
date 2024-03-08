@@ -3,15 +3,22 @@
 import { deleteTodo, checkTodo } from "@/app/utils/todos"
 import { useState } from "react"
 import EditTodoList from "./EditTodoList"
+import { useRouter } from "next/navigation"
 
 const TodoListComponent = ({ item }) => {
     const [checked, setChecked] = useState(item.checked || false)
     const [openEditTodo, setOpenEditTodo] = useState(false)
+    const router = useRouter()
     
     const handleComplete = async() => {
         const newValue = !checked;
         await checkTodo( item.id, newValue )
         setChecked(newValue)
+    }
+
+    const handleDeleteTodo = async () => {
+        await deleteTodo(item.id)
+        router.refresh()
     }
 
     return (
@@ -31,9 +38,9 @@ const TodoListComponent = ({ item }) => {
                             checked={checked}  
                             id={item.id} type="checkbox" className="rounded-md w-6 h-6 text-green-600 bg-transparen dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" 
                             />
-                        <label for={item.id} className="ms-2 text-md font-medium white cursor-pointer">{checked ? "Complete" : "Not Complete"}</label>
+                        <label htmlFor={item.id} className="ms-2 text-md font-medium white cursor-pointer">{checked ? "Complete" : "Not Complete"}</label>
                     </div>
-                    <button type="button" className="text-md font-medium text-white mt-4 p-2 bg-red-700 hover:bg-red-800 rounded-lg shadow w-full" onClick={() => deleteTodo(item.id)}>
+                    <button type="button" className="text-md font-medium text-white mt-4 p-2 bg-red-700 hover:bg-red-800 rounded-lg shadow w-full" onClick={handleDeleteTodo}>
                         <div className="flex items-center">
                             <svg className="me-1 w-6 h-6 text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="white" viewBox="0 0 24 24">
                                 <path fillRule="evenodd" d="M8.6 2.6A2 2 0 0 1 10 2h4a2 2 0 0 1 2 2v2h3a1 1 0 1 1 0 2v12a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V8a1 1 0 0 1 0-2h3V4c0-.5.2-1 .6-1.4ZM10 6h4V4h-4v2Zm1 4a1 1 0 1 0-2 0v8a1 1 0 1 0 2 0v-8Zm4 0a1 1 0 1 0-2 0v8a1 1 0 1 0 2 0v-8Z" clipRule="evenodd"/>

@@ -4,16 +4,25 @@ import { Button, Modal } from 'flowbite-react';
 import { useState } from 'react';
 import { addTodos } from '@/app/utils/todos';
 import ButtonAddTodo from './ButtonAddTodo'
+import { useRouter } from 'next/navigation';
 
 const AddTodoList = () => {
     const [openModal, setOpenModal] = useState(false);
+
+    const router = useRouter()
+
+    const addData = async (formData) => {
+        await addTodos(formData)
+        router.refresh()
+        setOpenModal(false)
+    }
     
     return (
         <>
             <Button onClick={() => setOpenModal(true)} color="success">+ Todo</Button>
             <Modal className="transition-all" show={openModal} onClose={() => setOpenModal(false)}>
                 <Modal.Header>Add Todo</Modal.Header>
-                <form className="" action={addTodos}>
+                <form className="" action={addData}>
                     <Modal.Body>
                         <div className="space-y-6">
                             <div className="mb-5">

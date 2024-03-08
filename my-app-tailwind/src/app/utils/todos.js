@@ -3,6 +3,7 @@ import { db } from "./firebase";
 import { collection, doc, getDocs, getDoc, updateDoc, deleteDoc, addDoc } from "firebase/firestore";
 
 const COLLECTION_NAME = 'test'
+
 export async function addTodos(formData) {
     const rawFormData = {
         title: formData.get('title'),
