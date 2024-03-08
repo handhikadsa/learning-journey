@@ -62,7 +62,7 @@ export async function getTodo(id) {
 }
 
 export async function deleteTodo(id) {
-    let docRef = doc(db, id);
+    let docRef = doc(db,  COLLECTION_NAME, id);
 
     try {
         await deleteDoc(docRef);
