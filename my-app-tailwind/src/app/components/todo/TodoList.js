@@ -1,10 +1,12 @@
 'use client'
 
 import { useState } from "react"
+import EditTodoList from "./EditTodoList"
 
 const TodoListComponent = () => {
 
     const [checked, setChecked] = useState(false)
+    const [openEditTodo, setOpenEditTodo] = useState(false)
 
     const handleComplete = () => {
         setChecked(!checked)
@@ -12,24 +14,35 @@ const TodoListComponent = () => {
 
     return (
         <>
-            <label htmlFor="editTodo" className={`card cursor-pointer transition-colors duration-300 ${checked && "bg-green-900"}`}>
-                <div className="card-body">
-                    <h2 className="card-header">Maximizing Your Productivity at Work</h2>
-                    <p className="text-content2">Are you looking to increase your productivity at work?</p>
-                    <div className="card-footer justify-start gap-5">
-                        <input type="checkbox" className="checkbox checkbox-success checkbox-xl"
-                            onChange={handleComplete}
-                            checked={checked} 
-                        />
-                        <div className="hover:bg-red-600 bg-gray-500 rounded-md flex justify-center items-center p-1 transition-colors cursor-pointer">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5">
-                                <path strokeLinecap="round" strokeLinejoin="round" d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
-                            </svg>
-                        </div>
-                    </div>
+            <div className="block max-w-sm p-6 bg-gray-800 transition-colors border rounded-lg shadow relative">
+                <div className="absolute top-0 right-0 p-2 cursor-pointer" onClick={() => setOpenEditTodo(true)}>
+                    <svg className="w-6 h-6 text-white hover:text-slate-400 transition-colors" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                        <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m14.3 4.8 2.9 2.9M7 7H4a1 1 0 0 0-1 1v10c0 .6.4 1 1 1h11c.6 0 1-.4 1-1v-4.5m2.4-10a2 2 0 0 1 0 3l-6.8 6.8L8 14l.7-3.6 6.9-6.8a2 2 0 0 1 2.8 0Z"/>
+                    </svg>
                 </div>
-            </label>
-            <input className="modal-state" id="editTodo" type="checkbox" />
+                <h5 className="mb-2 pt-1 text-2xl font-bold tracking-tight text-white-900">Noteworthy technology acquisitions 2021</h5>
+                <p className="font-normal text-white-700">Here are the biggest enterprise technology acquisitions of 2021 so far, in reverse chronological order.</p>
+                <div className="flex items-center gap-5">
+                    <div className="flex items-center mt-4 bg-green-700 rounded-md p-2 w-full cursor-pointer">
+                        <input  
+                            onChange={handleComplete}
+                            checked={checked}  
+                            id="green-checkbox" type="checkbox" className="rounded-md w-6 h-6 text-green-600 bg-transparen dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" 
+                            />
+                        <label for="green-checkbox" className="ms-2 text-md font-medium white cursor-pointer">{checked ? "Completed" : "Not Complete"}</label>
+                    </div>
+                    <button type="button" className="text-md font-medium text-white mt-4 p-2 bg-red-700 rounded-lg shadow w-full">
+                        <div className="flex items-center">
+                            <svg className="me-1 w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="white" viewBox="0 0 24 24">
+                                <path fillRule="evenodd" d="M8.6 2.6A2 2 0 0 1 10 2h4a2 2 0 0 1 2 2v2h3a1 1 0 1 1 0 2v12a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V8a1 1 0 0 1 0-2h3V4c0-.5.2-1 .6-1.4ZM10 6h4V4h-4v2Zm1 4a1 1 0 1 0-2 0v8a1 1 0 1 0 2 0v-8Zm4 0a1 1 0 1 0-2 0v8a1 1 0 1 0 2 0v-8Z" clipRule="evenodd"/>
+                            </svg>
+                            Delete
+                        </div>
+                    </button>
+                </div>
+            </div>
+
+            <EditTodoList openModal={openEditTodo} setOpenModal={setOpenEditTodo} />
         </>
     )
 }

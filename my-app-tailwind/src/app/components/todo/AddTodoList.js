@@ -1,20 +1,37 @@
 'use client'
 
-const AddTodoList = () => {
-    return (
-        <div className="modal">
-            <label className="modal-overlay" htmlFor="addTodo"></label>
-            <div className="modal-content flex flex-col gap-5">
-                <label htmlFor="addTodo" className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</label>
-                <h2 className="text-xl">Add Todo</h2>
-                <span>Lorem ipsum dolor sit amet consectetur adipisicing elit. Tenetur dolorum voluptate ratione dicta. Maxime cupiditate, est commodi consectetur earum iure, optio, obcaecati in nulla saepe maiores nobis iste quasi alias!</span>
-                <div className="flex gap-3">
-                    <button className="btn btn-success btn-block">Save</button>
+import { Button, Modal } from 'flowbite-react';
+import { useState } from 'react';
 
-                    <button className="btn btn-block">Cancel</button>
+const AddTodoList = () => {
+    const [openModal, setOpenModal] = useState(false);
+    
+    return (
+        <>
+            <Button onClick={() => setOpenModal(true)} color="success">+ Todo</Button>
+            <Modal show={openModal} onClose={() => setOpenModal(false)}>
+                <Modal.Header>Add Todo</Modal.Header>
+                <Modal.Body>
+                <div className="space-y-6">
+                    <p className="text-base leading-relaxed text-gray-500 dark:text-gray-400">
+                    With less than a month to go before the European Union enacts new consumer privacy laws for its citizens,
+                    companies around the world are updating their terms of service agreements to comply.
+                    </p>
+                    <p className="text-base leading-relaxed text-gray-500 dark:text-gray-400">
+                    The European Union’s General Data Protection Regulation (G.D.P.R.) goes into effect on May 25 and is meant
+                    to ensure a common set of data rights in the European Union. It requires organizations to notify users as
+                    soon as possible of high-risk data breaches that could personally affect them.
+                    </p>
                 </div>
-            </div>
-        </div>
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button onClick={() => setOpenModal(false)}>I accept</Button>
+                    <Button color="gray" onClick={() => setOpenModal(false)}>
+                        Decline
+                    </Button>
+                </Modal.Footer>
+            </Modal>
+        </>
     )
 }
 export default AddTodoList
