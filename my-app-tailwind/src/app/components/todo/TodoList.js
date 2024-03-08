@@ -1,15 +1,18 @@
 'use client'
 
+import { updateTodos } from "@/app/utils/todos"
 import { useState } from "react"
 import EditTodoList from "./EditTodoList"
 
-const TodoListComponent = () => {
+const TodoListComponent = ({ item }) => {
 
-    const [checked, setChecked] = useState(false)
+    const [checked, setChecked] = useState(item.checked || false)
     const [openEditTodo, setOpenEditTodo] = useState(false)
-
-    const handleComplete = () => {
-        setChecked(!checked)
+    
+    const handleComplete = async() => {
+        const newValue = !checked;
+        await updateTodos({id: item.id, checked: newValue })
+        setChecked(newValue)
     }
 
     return (
@@ -20,8 +23,8 @@ const TodoListComponent = () => {
                         <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m14.3 4.8 2.9 2.9M7 7H4a1 1 0 0 0-1 1v10c0 .6.4 1 1 1h11c.6 0 1-.4 1-1v-4.5m2.4-10a2 2 0 0 1 0 3l-6.8 6.8L8 14l.7-3.6 6.9-6.8a2 2 0 0 1 2.8 0Z"/>
                     </svg>
                 </div>
-                <h5 className="mb-2 pt-1 text-2xl font-bold tracking-tight text-white-900">Noteworthy technology acquisitions 2021</h5>
-                <p className="font-normal text-white-700">Here are the biggest enterprise technology acquisitions of 2021 so far, in reverse chronological order.</p>
+                <h5 className="mb-2 pt-1 text-2xl font-bold tracking-tight text-white-900">{item.title}</h5>
+                <p className="font-normal text-white-700">{item.title}</p>
                 <div className="flex items-center gap-5">
                     <div className="flex items-center mt-4 bg-green-700 rounded-md p-2 w-full cursor-pointer">
                         <input  

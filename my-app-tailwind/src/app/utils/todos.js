@@ -1,30 +1,55 @@
-import { getDoc } from "firebase/firestore";
+'use server'
+import { db } from "./firebase";
+import { collection, doc, getDocs, getDoc, updateDoc } from "firebase/firestore";
 
+const COLLECTION_NAME = 'test'
 export async function addTodos(data) {
 
     try {
 
-        const snapshot = await addDoc(collection(db, 'test'), data)
+        const snapshot = await addDoc(collection(db, COLLECTION_NAME), data)
         console.log(snapshot.id)
     } catch (error) {
+        throw new Error('Failed to fetch data')
+    }
+}
+export async function getTodos() {
 
-        if (error) {
-            return console.log(error)
-        }
+    try {
+        const q = await getDocs(collection(db, COLLECTION_NAME));
+
+        return q.docs.map(doc => ({
+            id: doc.id,
+            ...doc.data()
+        }))
+    } catch (e) {
+        console.error(e)
+        throw new Error('Failed to fetch data')
     }
 }
 
-async function getTodo(id) {
-    let docRef = doc(db, id);
-
-    let result = null;
-    let error = null;
+export async function updateTodos(data) {
+    const {id, ...restData } = data;
+    console.log(data)
+    let docRef = doc(db,  COLLECTION_NAME, data.id);
 
     try {
-        result = await getDoc(docRef);
+        const q = await updateDoc(docRef, restData);
+        console.log("operation update success: ", id)
     } catch (e) {
-        error = e;
+        console.error(e)
+        throw new Error('Failed to fetch data')
+    }
+}
+
+export async function getTodo(id) {
+    let docRef = doc(db, id);
+
+    try {
+        const snapshot = await getDoc(docRef);
+        return snapshot.data()
+    } catch (e) {
+        throw new Error('Failed to fetch data')
     }
 
-    return { result, error };
 }
