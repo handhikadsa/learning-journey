@@ -31,6 +31,7 @@ const Navbar = () => {
                     <NavLink className="navbar-item list-none" exact href="/">Home</NavLink>
                     <NavLink className="navbar-item list-none" exact href="/about">About</NavLink>
                     <NavLink className="navbar-item list-none" exact href="/about/profile">Profile</NavLink>
+                    <NavLink className="navbar-item list-none" exact href="/todo">Todo</NavLink>
                 </div>
                 <div className="navbar-end">
                     <a className="navbar-item">Home</a>
