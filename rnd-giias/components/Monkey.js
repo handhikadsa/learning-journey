@@ -17,7 +17,7 @@ const Loader = () => {
 
 const Controls = ({ stop, setStop }) => {
     return (
-        <Html center>
+        <Html wrapperClass="!transform-none !inset-x-1/2 flex justify-center gap-5 !top-[10%]">
             <Button onClick={() => setStop(!stop)} color={stop ? "red" : "green"} size="sm" className="px-10 text-md">{stop ? "Stop" : "Start"}</Button>
         </Html>
     )
