@@ -5,7 +5,20 @@
 
 body {
   box-sizing: border-box;
-  background-color: black;
+  padding: 0;
+  margin: 0;
+
+  /* background-image: url('/images/bg-home.png');
+  background-size: cover;
+  height: 100vh;
+  background-position: center;
+  background-repeat: no-repeat;
+  max-width: 500px; */
+}
+
+.name-input:focus {
+  border-color: red;
+  box-shadow: none;
 }
 
 @layer utilities {
