@@ -4,23 +4,23 @@ const port = 5000;
 
 app.use(express.json());
 
-// const books = [
-//     {
-//         id: 1,
-//         title: "How to get Rich",
-//         author: "Arthur",
-//     },
-//     {
-//         id: 2,
-//         title: "How to get Smart",
-//         author: "Morgan"
-//     },
-//     {
-//         id: 3,
-//         title: "How to train your dragon",
-//         author: "Skils"
-//     }
-// ]
+const books = [
+    {
+        id: 1,
+        title: "How to get Rich",
+        author: "Arthur",
+    },
+    {
+        id: 2,
+        title: "How to get Smart",
+        author: "Morgan"
+    },
+    {
+        id: 3,
+        title: "How to train your dragon",
+        author: "Skils"
+    }
+]
 
 app.post('/api/books', (req, res) => {
     const newBook = req.body; // 1. Get data from React
@@ -48,6 +48,23 @@ app.delete('/api/books/:id', (req, res) => {
         books.splice(index, 1);
         // 4. Send "No Content" success status
         res.status(204).send();
+    } else {
+        res.status(404).json({ error: "Book not found" });
+    }
+})
+
+app.put('/api/books/:id', (req, res) => {
+    const id = parseInt(req.params.id);
+    const updatedData = req.body;
+
+    const index = books.findIndex(book => book.id === id);
+
+    if (index !== -1) {
+        // Merge old data with new data (e.g. keep ID, update title)
+        books[index] = { ...books[index], ...updatedData };
+        
+        // Send back the updated book
+        res.json(books[index]);
     } else {
         res.status(404).json({ error: "Book not found" });
     }

@@ -13,24 +13,44 @@ import {
 import { useForm } from "react-hook-form";
 
 function App() {
-  const { register, handleSubmit, reset, formState: { errors } } = useForm();
+  const { register, handleSubmit, reset, setValue, formState: { errors } } = useForm();
   const [books, setBooks] = useState([])
+  const [editingId, setEditingId] = useState(null);
 
   const onSubmit = async (data) => {
     try {
-      const response = await fetch('/api/books', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(data)
-      });
+      if (editingId) {
+        // --- UPDATE LOGIC (PUT) ---
+        const response = await fetch(`/api/books/${editingId}`, {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(data)
+        });
 
-      if (response.ok) {
-        const newBook = await response.json();
-        setBooks([...books, newBook]); // Update UI
-        reset(); // Clear the inputs
+        if (response.ok) {
+          const updatedBook = await response.json();
+          // Update the specific item in our list
+          setBooks(books.map(book =>
+            book.id === editingId ? updatedBook : book
+          ));
+          setEditingId(null); // Exit edit mode
+        }
+      } else {
+        // --- CREATE LOGIC (POST) ---
+        const response = await fetch('/api/books', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(data)
+        });
+
+        if (response.ok) {
+          const newBook = await response.json();
+          setBooks([...books, newBook]);
+        }
       }
+      reset(); // Clear form
     } catch (error) {
-      console.error("Failed to add book", error);
+      console.error("Error:", error);
     }
   };
 
@@ -54,6 +74,17 @@ function App() {
     }
   };
 
+  const onEdit = (book) => {
+    setEditingId(book.id);      // Switch to Edit Mode
+    setValue("title", book.title);   // Pre-fill the form
+    setValue("author", book.author); // Pre-fill the form
+  };
+
+  const onCancel = () => {
+    setEditingId(null);
+    reset();
+  }
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -76,7 +107,6 @@ function App() {
     <div className="App">
       <header className="App-header">
         <Card className="w-full max-w-xl p-6 shadow-lg h-fit">
-
           <Typography variant="h4" color="blue-gray" className="mb-6">
             Library Manager
           </Typography>
@@ -102,9 +132,15 @@ function App() {
               {errors.author && <span className="text-red-500 text-xs">Author is required</span>}
             </div>
 
-            <Button type="submit" color="black" ripple={true}>
-              Add Book
+            <Button type="submit" color={editingId ? "green" : "black"} ripple={true}> 
+              {editingId ? "Update Book" : "Add Book"}
             </Button>
+
+            {editingId && (
+              <Button onClick={onCancel} variant="outlined" color="red">
+                Cancel
+              </Button>
+            )}
           </form>
 
           <hr className="my-6 border-blue-gray-50" />
@@ -114,12 +150,12 @@ function App() {
           </Typography>
 
           {/* 4. The List */}
-          <List className="h-[300px] overflow-auto">
+          <List className={`${books.length > 0 && "h-[250px]"} overflow-auto`}>
             {
               books.length > 0 ?
                 <>
                   {books.map((book) => (
-                    <ListItem key={book.id} className="border border-gray-200 mb-2 rounded-lg">
+                    <ListItem key={book.id} className={`${book.id === editingId && "bg-blue-gray-50"} border border-gray-200 mb-2 rounded-lg`}>
                       <div>
                         <Typography variant="h6" color="blue-gray">
                           {book.title}
@@ -129,10 +165,18 @@ function App() {
                         </Typography>
                       </div>
 
-                      {/* Placeholder for Delete Button */}
-                      <ListItemSuffix>
-                        <IconButton 
-                          variant="text" 
+                      <ListItemSuffix className="flex items-center">
+                        <IconButton
+                          variant="text"
+                          color="blue-gray"
+                          onClick={() => onEdit(book)}
+                        >
+                          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-5">
+                            <path strokeLinecap="round" strokeLinejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L6.832 19.82a4.5 4.5 0 0 1-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 0 1 1.13-1.897L16.863 4.487Zm0 0L19.5 7.125" />
+                          </svg>
+                        </IconButton>
+                        <IconButton
+                          variant="text"
                           color="red"
                           onClick={() => onDelete(book.id)}
                         >
