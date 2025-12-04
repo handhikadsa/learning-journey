@@ -8,9 +8,25 @@ import {
   List,
   ListItem,
   ListItemSuffix,
-  IconButton
+  IconButton,
+  CardHeader,
+  CardBody,
+  CardFooter
 } from "@material-tailwind/react";
 import { useForm } from "react-hook-form";
+
+import {
+  InteractiveDashboard,
+  MetabaseProvider,
+  defineMetabaseAuthConfig,
+  InteractiveQuestion,
+  StaticQuestion
+} from "@metabase/embedding-sdk-react";
+
+const authConfig = defineMetabaseAuthConfig({
+  metabaseInstanceUrl: "http://localhost:3000",
+  apiKey: "mb_xZtbm8uxW6zHYijrzPWoM4F/h5Q5iDapWjX8++eZgT4=",
+});
 
 function App() {
   const { register, handleSubmit, reset, setValue, formState: { errors } } = useForm();
@@ -106,17 +122,96 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <Card className="w-full max-w-xl p-6 shadow-lg h-fit">
+        <MetabaseProvider className="w-full" authConfig={authConfig}>
+          {/* <InteractiveDashboard dashboardId={1} /> */}
+          <div className="grid grid-cols-2 w-full gap-5 p-5 max-w-screen-2xl mx-auto">
+            <iframe
+              className="w-full h-full"
+              src={"http://localhost:3000/public/question/29038271-9c17-4149-8ebe-8322379b8f2b"}
+              allowtransparency="true"
+            />
+            <Card className="w-full shadow-lg h-full">
+              <CardBody>
+                <Typography variant="h5" color="blue-gray" className="mb-2">
+                  Revenue
+                </Typography>
+                <CardBody className="p-0">
+                  <StaticQuestion
+                    height={350}
+                    questionId={9}
+                    withResetButton={false}
+                    withDownloads={false}
+                    isSaveEnabled={false}
+                    withChartTypeSelector={false}
+                  />
+                </CardBody>
+              </CardBody>
+            </Card>
+
+            <Card className="w-full shadow-lg h-full">
+              <CardBody>
+                <Typography variant="h5" color="blue-gray" className="mb-2">
+                  Number of Orders
+                </Typography>
+                <CardBody className="p-0">
+                  <StaticQuestion
+                    height={350}
+                    questionId={19}
+                    withResetButton={false}
+                    withDownloads={false}
+                    isSaveEnabled={false}
+                    withChartTypeSelector={false}
+                  />
+                </CardBody>
+              </CardBody>
+            </Card>
+
+            <Card className="w-full shadow-lg h-full">
+              <CardBody>
+                <Typography variant="h5" color="blue-gray" className="mb-2">
+                  Best selling products
+                </Typography>
+                <CardBody className="p-0">
+                  <StaticQuestion
+                    height={350}
+                    questionId={21}
+                    withResetButton={false}
+                    withDownloads={false}
+                    isSaveEnabled={false}
+                    withChartTypeSelector={false}
+                  />
+                </CardBody>
+              </CardBody>
+            </Card>
+
+            <Card className="w-full shadow-lg h-full">
+              <CardBody>
+                <Typography variant="h5" color="blue-gray" className="mb-2">
+                  Customer Satisfaction Per Category
+                </Typography>
+                <CardBody className="p-0">
+                  <StaticQuestion
+                    height={350}
+                    questionId={3}
+                    withResetButton={false}
+                    withDownloads={false}
+                    isSaveEnabled={false}
+                    withChartTypeSelector={false}
+                  />
+                </CardBody>
+              </CardBody>
+            </Card>
+          </div>
+        </MetabaseProvider>
+        {/* <Card className="w-full p-6 shadow-lg h-fit">
           <Typography variant="h4" color="blue-gray" className="mb-6">
             Library Manager
           </Typography>
 
-          {/* 3. The Form */}
           <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
             <div>
               <Input
                 label="Book Title"
-                // Spread the 'register' function to connect this input
                 {...register("title", { required: true })}
                 error={errors.title ? true : false}
               />
@@ -132,7 +227,7 @@ function App() {
               {errors.author && <span className="text-red-500 text-xs">Author is required</span>}
             </div>
 
-            <Button type="submit" color={editingId ? "green" : "black"} ripple={true}> 
+            <Button type="submit" color={editingId ? "green" : "black"} ripple={true}>
               {editingId ? "Update Book" : "Add Book"}
             </Button>
 
@@ -149,7 +244,6 @@ function App() {
             Current Books
           </Typography>
 
-          {/* 4. The List */}
           <List className={`${books.length > 0 && "h-[250px]"} overflow-auto`}>
             {
               books.length > 0 ?
@@ -194,7 +288,7 @@ function App() {
                 </div>
             }
           </List>
-        </Card>
+        </Card> */}
       </header>
     </div>
   );
